@@ -18,7 +18,7 @@ typedef struct ve Ve;
 struct NodeVe {
 	Ve data;
 };
-typedef struct NodeVe nodeVe;
+typedef struct nodeVe nodeVe;
 
 struct danhsachve {
 	int n = 0;
@@ -65,9 +65,7 @@ NGAY_THANG nhapNgayThangNam();
 
 NGAY_THANG nhapGioKhoiHanh();
 
-void hieuChinhCB(PTRListChuyenBay &First, listMayBay lmb);
-
-void DSVe(listMayBay lmb, chuyenBay &cb);
+void hieuChinhCB(PTRListChuyenBay &First);
 
 int rangBuocThoiGian(NGAY_THANG tg);
 

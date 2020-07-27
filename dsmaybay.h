@@ -49,6 +49,8 @@ void nhapSoHieuMB(listMayBay &lmb, char *soHieu);
 
 void nhapLoaiMB(listMayBay &lmb, char *loaiMB);
 
+void quickSortMB(listMayBay &lmb, int q, int r);
+
 void menu(listMayBay &lmb, mayBay &mb);
 
 void readFile(listMayBay &lmb);

@@ -60,7 +60,7 @@ void menuHK();
 
 void demCay(TREEhanhkhach t, int &dem);
 
-void luuHK(TREEhanhkhach t, fstream &file);
+//void luuHK(TREEhanhkhach t, fstream &file);
 
 void saveHK(TREEhanhkhach t);
 

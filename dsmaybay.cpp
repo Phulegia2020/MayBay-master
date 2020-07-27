@@ -215,6 +215,44 @@ void xuatMayBay(mayBay mb)
 	cout<<"So dong cua may bay: "<<mb.soDong<<endl;
 }
 
+void quickSortMB(listMayBay &lmb, int q, int r)
+{
+	NODEMAYBAY temp = new nodeMB;
+	int i,j;
+	i = q;
+	j = r;
+	NODEMAYBAY x = new nodeMB;
+	x->data = lmb.NodeMayBay[(q + r) / 2]->data;
+	do
+	{
+		while (stricmp(lmb.NodeMayBay[i]->data.soHieuMayBay, x->data.soHieuMayBay) < 0)
+		{
+			i++;
+		}
+		while (stricmp(lmb.NodeMayBay[j]->data.soHieuMayBay, x->data.soHieuMayBay) > 0)
+		{
+			j--;
+		}
+		if (i <= j)
+		{
+			temp = lmb.NodeMayBay[i];
+			lmb.NodeMayBay[i] = lmb.NodeMayBay[j];
+			lmb.NodeMayBay[j] = temp;
+			i++;
+			j--;
+		}
+	}
+	while (i <= j);
+	if (q < j)
+	{
+		quickSortMB(lmb, q, j);
+	}
+	if (i < r)
+	{
+		quickSortMB(lmb, i, r);
+	}
+}
+
 void menu(listMayBay &lmb, mayBay &mb)
 {
 	char s[20];
@@ -245,6 +283,7 @@ void menu(listMayBay &lmb, mayBay &mb)
 				} while (true);
 				break;
 			case 2:
+				quickSortMB(lmb, 0, lmb.n - 1);
 				cout<<"\n\n\n\nDanh sach may bay!"<<endl;
 				for (int i = 0; i < lmb.n; i++)
 				{

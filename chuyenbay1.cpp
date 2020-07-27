@@ -7,13 +7,13 @@ int rangBuocThoiGian(NGAY_THANG tg)
 {
 	time_t baygio = time(0);
 	tm *ltm = localtime(&baygio);
-	/*int posx = X_VT + 95,
-		posy = Y_VT + 10;*/
-	if(tg.ngay < ltm->tm_mday || tg.thang < 1 + ltm->tm_mon || tg.nam < 1900 + ltm->tm_year)
+	//int posx = X_VT + 95,
+		//posy = Y_VT + 10;
+	if(tg.ngay > ltm->tm_mday || tg.thang > 1 + ltm->tm_mon || tg.nam > 1900 + ltm->tm_year)
 	{
-		if(tg.thang <= 1 + ltm->tm_mon || tg.nam < 1900 + ltm->tm_year)
+		if(tg.thang >= 1 + ltm->tm_mon || tg.nam > 1900 + ltm->tm_year)
 		{
-			if(tg.nam <= 1900 + ltm->tm_year)
+			if(tg.nam >= 1900 + ltm->tm_year)
 			{
 				//TextColor(MAUNEN);
 				//gotoxy(posx + 2, posy + 28);
@@ -75,12 +75,12 @@ int rangBuocThoiGian(NGAY_THANG tg)
 
 int rangBuocGio(NGAY_THANG h)
 {
-	/*time_t baygio = time(0);
-	tm *ltm = localtime(&baygio);*/
+	time_t baygio = time(0);
+	tm *ltm = localtime(&baygio);
 	
-	if (h.gio > 23 || h.gio < 0)
+	if (h.gio > 24 || h.gio < 1)
 	{
-		cout << "GIO BAT DAU TU 0H DEN 23H! VUI LONG NHAP GIO HOP LE!";
+		cout << "GIO BAT DAU TU 1H DEN 24H! VUI LONG NHAP GIO HOP LE!";
 		return TRUE;
 	}
 	if (h.phut > 59 || h.phut < 0)
@@ -88,11 +88,11 @@ int rangBuocGio(NGAY_THANG h)
 		cout << "GIO BAT DAU TU 0 DEN 59 PHUT! VUI LONG NHAP PHUT HOP LE!";
 		return TRUE;
 	}
-	/*if (h.gio > ltm->tm_hour)
+	if (h.gio > ltm->tm_hour)
 	{
-		cout << "HIEN TAI LA " << ltm->tm_hour << ":" << 1 + ltm->tm_min << "! VUI LONG NHAP GIO PHUT HOP LE!";
+		cout << "HIEN TAI LA NGAY " << ltm->tm_hour << ":" << 1 + ltm->tm_min << "! VUI LONG NHAP GIO PHUT HOP LE!";
 		return TRUE;
-	}*/
+	}
 	return FALSE;
 }
 
@@ -263,42 +263,6 @@ void deleteNodeCB(PTRListChuyenBay &First)
 {
 	char day[24] = {'A','B','C','D','E','F','G','H','I'};
 }*/
-
-void DSVe (listMayBay lmb, chuyenBay &cb)
-{
-	char day[26] = "ABCDEFGHIJKLMN";
-	char temp[4];
-	int tempSDay = lmb.NodeMayBay[searchNodeMB(lmb,cb.soHieuMayBay)]->data.soDay;
-	int tempSDong = lmb.NodeMayBay[searchNodeMB(lmb,cb.soHieuMayBay)]->data.soDong;
-	cb.listVe.dsVe = new nodeVe[tempSDay*tempSDong];
-	int k = 0;
-	for (int i = 0; i< tempSDay; i++)
-	{
-		temp[0] = day[i];
-		for (int j = 1; j <= tempSDong; j++)
-		{
-			if (j < 10)
-			{
-				
-				char array[3];
-				temp[1] = '\0';
-				strcat(temp,"0");
-				itoa(j, array, 10);
-				strcat(temp,array);
-			}
-			else
-			{
-				char array[3];
-				temp[1] = '\0';
-				itoa(j, array, 10);
-				strcat(temp, array);
-			}
-			strcpy(cb.listVe.dsVe[k].data.soVe,temp);
-			cb.listVe.n++;
-			k++;
-		}
-	}
-}
 
 bool searchNodeCB(PTRListChuyenBay First, char *s)
 {
@@ -496,34 +460,5 @@ void sapXepCB(PTRListChuyenBay &First, chuyenBay *flight)
 		p->data.gioKhoiHanh = flight[i].gioKhoiHanh;
 		strcpy(p->data.sanBayDen, flight[i].sanBayDen);
 		i++;
-	}
-}
-
-void hieuChinhCB(PTRListChuyenBay &First, listMayBay lmb)
-{
-	cout << "\n\n\t\tHIEU CHINH CHUYEN BAY\n\n";
-	rewind(stdin);
-	cout << "\tNhap ma chuyen bay can hieu chinh: ";
-	char mcb[20];
-	gets(mcb);
-	if (searchNodeCB(First, mcb) == true)
-	{
-		PTRListChuyenBay p = new listChuyenBay;
-		for (p = First; p != NULL && stricmp(p->data.maChuyenBay, mcb) != 0; p = p->next);
-		cout << "\n\tTHONG TIN CU\n";
-		xuatChuyenBay(p->data);
-		cout << "\n\tTHONG TIN MOI\n\n";
-		chuyenBay f;
-		f = p->data;
-		//p->data = nhapChuyenBay(First, f, lmb);
-		cout<<"Hieu chinh ngay gio khoi hanh!"<<endl;
-		f.ngayKhoiHanh = nhapNgayThangNam();
-		f.gioKhoiHanh = nhapGioKhoiHanh();
-		p->data = f;
-		cout << "\n===> HIEU CHINH THANH CONH!\n";
-	}
-	else
-	{
-		cout << "\n===> CHUYEN BAY NAY KHONG TON TAI!\n";
 	}
 }
